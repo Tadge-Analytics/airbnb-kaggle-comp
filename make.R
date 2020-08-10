@@ -8,25 +8,22 @@ source("R/functions.R") # Define your custom code as a bunch of functions.
 source("R/plans.R")      # Create your drake plan.
 
 
-use_parallel(yes_or_no = TRUE)
-
-
-make(investigation_plan)
-
-
-drake::build_times(grid_result)
-
-
+# use_parallel(yes_or_no = TRUE)
+# 
+# 
+# make(investigation_plan)
+# 
+# 
+# drake::build_times(grid_result)
+# 
+# readd(grid_eval)
 
 
 
 make(evaluation_plan)
 
 
-
-
-
-
+readd(testing_split_score)
 
 
 # tictoc::tic()
@@ -41,7 +38,6 @@ make(evaluation_plan)
 
 
 # vis_drake_graph(plan)
-
 
 
 

@@ -103,7 +103,16 @@ setup_training_folds <- function(training_split = readd(training_split)) {
     vfold_cv(v = 2)  
   
   # training_split %>%
-  #   bootstraps(strata = country_destination, times = 1)
+  #   bootstraps(
+  # # strata = country_destination, 
+  # times = 1) %>% 
+  #   pluck("splits", 1) %>% 
+  #   analysis() %>% 
+  #   count(id) %>% 
+  #   arrange(desc(n))
+  
+  
+  
   
 }
 
@@ -155,12 +164,12 @@ setup_recipe <- function(training_split = readd(training_split)) {
 specify_model <- function() {
   
   boost_tree(
-    trees = tune(), 
-    tree_depth = tune(),
-    min_n = tune(),
-    loss_reduction = tune(),
-    sample_size = tune(),
-    mtry = tune(),
+    trees = 1800, 
+    tree_depth = 10,
+    min_n = 22,
+    loss_reduction = 1.29,
+    sample_size = 0.5,
+    mtry = 7,
     learn_rate = tune() ) %>%
     set_engine("xgboost") %>%
     set_mode("classification")
@@ -177,12 +186,12 @@ setup_config_grid <- function(training_split = training(readd(split_data)),
   set.seed(123)
   
   the_grid <- grid_latin_hypercube(
-    trees(),
-    tree_depth(),
-    min_n(),
-    loss_reduction(),
-    sample_prop(),
-    finalize(mtry(), training_split),
+    # trees(),
+    # tree_depth(),
+    # min_n(),
+    # loss_reduction(),
+    # sample_prop(),
+    # finalize(mtry(), training_split),
     learn_rate(),
     size = total_num_configs)
   
@@ -421,7 +430,7 @@ create_kaggle_submission_file <- function() {
   
   set.seed(123)
   
-  model_with_full_training <- fit(readd(finalized_wf), data = readd(prepped_raw_data))
+  model_with_full_training <- fit(readd(finalized_wf), data = readd(prepped_raw_data) %>% sample_n(20000))
   
   unseen_data_with_predictions <- vroom::vroom("data/test_users.csv") %>%
     left_join(readd(summarised_sessions), by = c("id" = "user_id")) %>% 

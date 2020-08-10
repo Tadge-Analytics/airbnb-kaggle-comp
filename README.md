@@ -11,9 +11,9 @@ Kaggle still allows late submissions, for this comp, which is handy, for our pur
 I am aiming to do this ML implementation with the drake package. "What's drake?", you ask.
 https://books.ropensci.org/drake/
 
-I’ve just been experimenting with R’s Tidymodels, mainly just figuring out the workflow. 
+Currently have made a little progress towards the winner's score:
 
-So far, I haven’t been able to get xgboost to come up with any predictions other than just the top 5 overall… but am only just getting started...
+![](submission_scores.PNG)
 
 
 ## About the challenge

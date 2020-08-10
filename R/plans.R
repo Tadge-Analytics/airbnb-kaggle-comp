@@ -11,7 +11,7 @@ investigation_plan <- drake_plan(
   
   prepped_raw_data = prep_raw_data(training_data_import, summarised_sessions),
   
-  initial_split = sample_and_split_the_data(prepped_raw_data, 5000),
+  initial_split = sample_and_split_the_data(prepped_raw_data, 20000),
   
   training_split = training(initial_split),
   
@@ -23,7 +23,7 @@ investigation_plan <- drake_plan(
   
   model_wf = create_workflow(model_recipe, model_spec),
   
-  model_configs = setup_config_grid(training_split, configs_to_run_now = 2),
+  model_configs = setup_config_grid(training_split, configs_to_run_now = 4),
   # model_configs = tibble(mtry = 11L,    trees = 1975L,    min_n = 19L,    tree_depth = 10L,    learn_rate = 0.0615633845352624,    loss_reduction = 6.26915316760277e-08,    sample_size = 0.14764075310668),
 
   grid_result = tune_with_grid(model_wf, training_folds, model_configs),
@@ -50,16 +50,6 @@ evaluation_plan <- drake_plan(
   # we might also use fit_resamples() to get a distribution for our expected unseen data result
   
 )
-
-
-
-
-
-
-
-
-
-
 
 
 
